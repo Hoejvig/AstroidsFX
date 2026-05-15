@@ -1,4 +1,4 @@
-package dk.sdu.cbse.common.bullet;
+package bullet;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

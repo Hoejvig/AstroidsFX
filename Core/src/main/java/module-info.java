@@ -1,0 +1,4 @@
+module Core {
+    requires Common;
+
+}

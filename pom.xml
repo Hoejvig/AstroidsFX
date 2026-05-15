@@ -110,7 +110,8 @@
             in "java.lang.module.FindException: Module monitor.observer.zero not found";
             strange... -->
             <!--                        <argument>-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=127.0.0.1:8000</argument>-->
-            <argument>--module=Core/dk.sdu.mmmi.cbse.main.Main</argument>
+            <argument>--module=Core/dk.sdu.cbse.App</argument>
+            <!-- File: AstroidsFX/pom.xml or Core/pom.xml -->
             <argument>--add-modules javafx.graphics</argument>
           </arguments>
         </configuration>
@@ -184,12 +185,10 @@
     </profile>
   </profiles>
   <modules>
-    <module>my-module-name</module>
-    <module>pom-root</module>
     <module>Core</module>
     <module>Common</module>
     <module>Bullet</module>
-    <module>CommonBullet</module>
     <module>Player</module>
+    <module>CommonBullet</module>
   </modules>
 </project>
