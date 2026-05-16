@@ -14,7 +14,6 @@ public class PlayerControlSystem implements IEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {
         for (Entity player : world.getEntities(Player.class)) {
-
             if (gameData.getKeys().isDown(GameKeys.LEFT)) {
                 player.setRotation(player.getRotation() - 5);
             }
@@ -26,9 +25,9 @@ public class PlayerControlSystem implements IEntityProcessingService {
             if (gameData.getKeys().isDown(GameKeys.UP)) {
                 double changeX = Math.cos(Math.toRadians(player.getRotation()));
                 double changeY = Math.sin(Math.toRadians(player.getRotation()));
-
-                player.setX(player.getX() + changeX);
-                player.setY(player.getY() + changeY);
+                double speed = 3.5;
+                player.setX(player.getX() + changeX * speed);
+                player.setY(player.getY() + changeY * speed);
             }
 
             if (gameData.getKeys().isPressed(GameKeys.SPACE)) {
@@ -41,9 +40,9 @@ public class PlayerControlSystem implements IEntityProcessingService {
             if (gameData.getKeys().isDown(GameKeys.DOWN)) {
                 double changeX = Math.cos(Math.toRadians(player.getRotation()));
                 double changeY = Math.sin(Math.toRadians(player.getRotation()));
-
-                player.setX(player.getX() - changeX);
-                player.setY(player.getY() - changeY);
+                double speed = 3.5;
+                player.setX(player.getX() - changeX * speed);
+                player.setY(player.getY() - changeY * speed);
             }
 
             wrapAroundScreen(player, gameData);

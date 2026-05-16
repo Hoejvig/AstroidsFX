@@ -186,5 +186,6 @@
     <module>CommonBullet</module>
     <module>Astroid</module>
     <module>Collision</module>
+    <module>Enemy</module>
   </modules>
 </project>
