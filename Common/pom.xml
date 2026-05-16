@@ -88,6 +88,25 @@
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>3.6.1</version>
         </plugin>
+        <plugin>
+      <artifactId>maven-antrun-plugin</artifactId>
+      <version>3.1.0</version>
+      <executions>
+        <execution>
+          <phase>install</phase>
+          <configuration>
+            <target>
+              <copy file="${project.build.directory}/${project.build.finalName}.jar"
+                    todir="${project.parent.basedir}/mods-mvn"
+                    overwrite="true" />
+            </target>
+          </configuration>
+          <goals>
+            <goal>run</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
       </plugins>
     </pluginManagement>
   </build>

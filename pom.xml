@@ -101,18 +101,12 @@
           <executable>java</executable>
           <workingDirectory>.</workingDirectory>
           <arguments>
-            <argument>--module-path=mods-mvn</argument>
-            <argument>--class-path=libs/*</argument>
-            <!-- because spark.core is an automatic module and actually required,
-            monitor.observer.zero would be resolved as well and does not need
-            to be added explicitly;
-            I still wanted to do it for clarity, but for some reason that results
-            in "java.lang.module.FindException: Module monitor.observer.zero not found";
-            strange... -->
-            <!--                        <argument>-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=127.0.0.1:8000</argument>-->
+            <argument>--module-path=mods-mvn;libs</argument>
+            <argument>--add-modules</argument>
+            <argument>javafx.controls</argument>
+            <argument>--add-modules</argument>
+            <argument>javafx.graphics</argument>
             <argument>--module=Core/dk.sdu.cbse.App</argument>
-            <!-- File: AstroidsFX/pom.xml or Core/pom.xml -->
-            <argument>--add-modules javafx.graphics</argument>
           </arguments>
         </configuration>
       </plugin>
@@ -190,5 +184,7 @@
     <module>Bullet</module>
     <module>Player</module>
     <module>CommonBullet</module>
+    <module>Astroid</module>
+    <module>Collision</module>
   </modules>
 </project>

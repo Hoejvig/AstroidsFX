@@ -60,4 +60,23 @@ public class Entity implements Serializable {
     public float getRadius() {
         return this.radius;
     }
+
+    private double dx;
+    private double dy;
+
+    public double getDX() {
+        return dx;
+    }
+
+    public void setDX(double dx) {
+        this.dx = dx;
+    }
+
+    public double getDY() {
+        return dy;
+    }
+
+    public void setDY(double dy) {
+        this.dy = dy;
+    }
 }
