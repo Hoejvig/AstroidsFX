@@ -1,13 +1,13 @@
-import dk.sdu.cbse.common.services.IEntityProcessingService;
-import dk.sdu.cbse.common.services.IGamePluginService;
+import services.IEntityProcessingService;
+import services.IGamePluginService;
 
 module Astroid {
 
     requires Common;
 
     provides IGamePluginService
-            with dk.sdu.cbse.asteroid.AsteroidPlugin;
+            with asteroid.AsteroidPlugin;
 
     provides IEntityProcessingService
-            with dk.sdu.cbse.asteroid.AsteroidControlSystem;
+            with asteroid.AsteroidControlSystem;
 }

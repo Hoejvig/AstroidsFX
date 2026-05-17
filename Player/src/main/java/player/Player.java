@@ -1,6 +1,6 @@
-package dk.sdu.cbse.player;
+package player;
 
-import dk.sdu.cbse.common.data.Entity;
+import data.Entity;
 
 public class Player extends Entity {
 }

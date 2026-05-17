@@ -89,7 +89,7 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
-        <version> 3.5.0</version>
+        <version>3.5.0</version>
         <executions>
           <execution>
             <goals>
@@ -100,14 +100,13 @@
         <configuration>
           <executable>java</executable>
           <workingDirectory>.</workingDirectory>
-          <arguments>
-            <argument>--module-path=mods-mvn;libs</argument>
-            <argument>--add-modules</argument>
-            <argument>javafx.controls</argument>
-            <argument>--add-modules</argument>
-            <argument>javafx.graphics</argument>
-            <argument>--module=Core/dk.sdu.cbse.App</argument>
-          </arguments>
+              <arguments>
+                <argument>--module-path=mods-mvn;libs</argument>
+
+                <argument>--class-path=libs/*</argument>
+
+                <argument>--module=Core/app.App</argument>
+              </arguments>
         </configuration>
       </plugin>
     </plugins>
@@ -130,9 +129,6 @@
               <filesets>
                 <fileset>
                   <directory>mods-mvn</directory>
-                </fileset>
-                <fileset>
-                  <directory>libs</directory>
                 </fileset>
               </filesets>
             </configuration>

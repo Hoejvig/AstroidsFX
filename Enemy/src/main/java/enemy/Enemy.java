@@ -1,6 +1,6 @@
-package dk.sdu.cbse.enemy;
+package enemy;
 
-import dk.sdu.cbse.common.data.Entity;
+import data.Entity;
 
 public class Enemy extends Entity {
 }

@@ -1,9 +1,9 @@
-package dk.sdu.cbse.asteroid;
+package asteroid;
 
-import dk.sdu.cbse.common.data.Entity;
-import dk.sdu.cbse.common.data.GameData;
-import dk.sdu.cbse.common.data.World;
-import dk.sdu.cbse.common.services.IGamePluginService;
+import data.Entity;
+import data.GameData;
+import data.World;
+import services.IGamePluginService;
 
 import java.util.Random;
 

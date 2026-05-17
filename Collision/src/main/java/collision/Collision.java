@@ -1,9 +1,9 @@
 package collision;
 
-import dk.sdu.cbse.common.data.Entity;
-import dk.sdu.cbse.common.data.GameData;
-import dk.sdu.cbse.common.data.World;
-import dk.sdu.cbse.common.services.IPostEntityProcessingService;
+import data.Entity;
+import data.GameData;
+import data.World;
+import services.IPostEntityProcessingService;
 
 import java.util.ArrayList;
 import java.util.List;
