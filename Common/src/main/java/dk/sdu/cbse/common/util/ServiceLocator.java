@@ -4,72 +4,81 @@ import java.lang.module.Configuration;
 import java.lang.module.ModuleDescriptor;
 import java.lang.module.ModuleFinder;
 import java.lang.module.ModuleReference;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.ServiceConfigurationError;
+import java.util.ServiceLoader;
 import java.util.stream.Collectors;
 
 public enum ServiceLocator {
 
     INSTANCE;
 
-    private static final Map<Class, ServiceLoader> loadermap = new HashMap<>();
+    private static final Map<Class<?>, ServiceLoader<?>> LOADERS = new HashMap<>();
+
     private final ModuleLayer layer;
 
     ServiceLocator() {
+        this.layer = createPluginLayer();
+    }
+
+    private ModuleLayer createPluginLayer() {
         try {
-            Path pluginsDir = Paths.get("plugins"); // Directory with plugins JARs
+            Path pluginsDir = Paths.get("plugins");
 
-            // Search for plugins in the plugins directory
-            ModuleFinder pluginsFinder = ModuleFinder.of(pluginsDir);
+            if (!Files.exists(pluginsDir)) {
+                Files.createDirectories(pluginsDir);
+            }
 
-            // Find all names of all found plugin modules
-            List<String> plugins = pluginsFinder
+            ModuleFinder pluginFinder = ModuleFinder.of(pluginsDir);
+
+            List<String> pluginModuleNames = pluginFinder
                     .findAll()
                     .stream()
                     .map(ModuleReference::descriptor)
                     .map(ModuleDescriptor::name)
                     .collect(Collectors.toList());
 
-            // Create configuration that will resolve plugin modules
-            // (verify that the graph of modules is correct)
-            Configuration pluginsConfiguration = ModuleLayer
+            Configuration pluginConfiguration = ModuleLayer
                     .boot()
                     .configuration()
-                    .resolve(pluginsFinder, ModuleFinder.of(), plugins);
+                    .resolve(pluginFinder, ModuleFinder.of(), pluginModuleNames);
 
-            // Create a module layer for plugins
-            layer = ModuleLayer
+            return ModuleLayer
                     .boot()
-                    .defineModulesWithOneLoader(pluginsConfiguration, ClassLoader.getSystemClassLoader());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+                    .defineModulesWithOneLoader(
+                            pluginConfiguration,
+                            ClassLoader.getSystemClassLoader()
+                    );
+        } catch (Exception exception) {
+            throw new IllegalStateException("Could not create plugin module layer", exception);
         }
-
     }
 
-
+    @SuppressWarnings("unchecked")
     public <T> List<T> locateAll(Class<T> service) {
-        ServiceLoader<T> loader = loadermap.get(service);
+        ServiceLoader<T> loader = (ServiceLoader<T>) LOADERS.get(service);
 
         if (loader == null) {
             loader = ServiceLoader.load(layer, service);
-            loadermap.put(service, loader);
+            LOADERS.put(service, loader);
         }
 
-        List<T> list = new ArrayList<T>();
+        List<T> services = new ArrayList<>();
 
-        if (loader != null) {
-            try {
-                for (T instance : loader) {
-                    list.add(instance);
-                }
-            } catch (ServiceConfigurationError serviceError) {
-                serviceError.printStackTrace();
+        try {
+            for (T serviceInstance : loader) {
+                services.add(serviceInstance);
             }
+        } catch (ServiceConfigurationError error) {
+            error.printStackTrace();
         }
 
-        return list;
+        return services;
     }
-
 }
