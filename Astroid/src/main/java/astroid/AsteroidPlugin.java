@@ -31,10 +31,15 @@ public class AsteroidPlugin implements IGamePluginService {
 
         asteroid.setX(random.nextInt(gameData.getDisplayWidth()));
         asteroid.setY(random.nextInt(gameData.getDisplayHeight()));
+
         asteroid.setRadius(12);
 
         asteroid.setDX(random.nextDouble() * 2 - 1);
         asteroid.setDY(random.nextDouble() * 2 - 1);
+
+        asteroid.setMaxHealth(1);
+        asteroid.setHealth(1);
+        asteroid.setDamageable(true);
 
         return asteroid;
     }

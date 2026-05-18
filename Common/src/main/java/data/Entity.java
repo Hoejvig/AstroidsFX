@@ -80,6 +80,46 @@ public class Entity implements Serializable {
         this.dy = dy;
     }
 
+    private int maxHealth = 1;
+    private int health = 1;
+    private int pendingDamage = 0;
+    private boolean damageable = true;
 
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public void setMaxHealth(int maxHealth) {
+        this.maxHealth = maxHealth;
+        this.health = maxHealth;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public int getPendingDamage() {
+        return pendingDamage;
+    }
+
+    public void addDamage(int damage) {
+        this.pendingDamage += damage;
+    }
+
+    public void clearPendingDamage() {
+        this.pendingDamage = 0;
+    }
+
+    public boolean isDamageable() {
+        return damageable;
+    }
+
+    public void setDamageable(boolean damageable) {
+        this.damageable = damageable;
+    }
     
 }

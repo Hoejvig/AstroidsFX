@@ -33,8 +33,8 @@ public class Collision implements IPostEntityProcessingService {
                             + " and "
                             + entity2.getClass().getSimpleName());
 
-                    toRemove.add(entity1);
-                    toRemove.add(entity2);
+                     entity1.addDamage(1);
+                     entity2.addDamage(1);
 
                     if (shouldGiveScore(entity1, entity2)) {
                         addScore(10);

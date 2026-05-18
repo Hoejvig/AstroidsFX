@@ -183,5 +183,6 @@
     <module>Astroid</module>
     <module>Collision</module>
     <module>Enemy</module>
+    <module>Health</module>
   </modules>
 </project>

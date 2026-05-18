@@ -18,6 +18,10 @@ public class EnemyPlugin implements IGamePluginService {
     private Entity createEnemy(GameData gameData) {
         Entity enemy = new Enemy();
 
+        enemy.setMaxHealth(2);
+        enemy.setHealth(2);
+        enemy.setDamageable(true);
+
         enemy.setPolygonCoordinates(
                 12, 0,
                 -8, -8,
