@@ -7,6 +7,7 @@ module Core {
     requires spring.context;
     requires spring.beans;
     requires spring.core;
+    requires spring.web;
 
     uses services.IGamePluginService;
     uses services.IEntityProcessingService;

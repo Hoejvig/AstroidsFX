@@ -27,9 +27,13 @@ public enum ServiceLocator {
         this.layer = createPluginLayer();
     }
 
+    public ModuleLayer getLayer() {
+        return layer;
+    }
+
     private ModuleLayer createPluginLayer() {
         try {
-            Path pluginsDir = Paths.get("mods-mvn");
+            Path pluginsDir = Paths.get("plugins");
 
             if (!Files.exists(pluginsDir)) {
                 Files.createDirectories(pluginsDir);

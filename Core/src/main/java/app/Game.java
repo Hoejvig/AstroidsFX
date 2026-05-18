@@ -20,6 +20,10 @@ import data.World;
 
 public class Game {
 
+    private final ScoreClient scoreClient;
+    private int cachedScore = 0;
+    private int scoreRefreshCounter = 0;
+
     private final GameData gameData;
     private final World world;
 
@@ -35,13 +39,15 @@ public class Game {
             World world,
             List<IGamePluginService> gamePlugins,
             List<IEntityProcessingService> entityProcessors,
-            List<IPostEntityProcessingService> postEntityProcessors
+            List<IPostEntityProcessingService> postEntityProcessors,
+            ScoreClient scoreClient
     ) {
         this.gameData = gameData;
         this.world = world;
         this.gamePlugins = gamePlugins;
         this.entityProcessors = entityProcessors;
         this.postEntityProcessors = postEntityProcessors;
+        this.scoreClient = scoreClient;
     }
 
     public void start(Stage stage) {
@@ -49,6 +55,8 @@ public class Game {
                 gameData.getDisplayWidth(),
                 gameData.getDisplayHeight()
         );
+
+        
 
         graphicsContext = canvas.getGraphicsContext2D();
 
@@ -73,6 +81,11 @@ public class Game {
         stage.setTitle("AsteroidsFX - Spring Core");
         stage.setScene(scene);
         stage.show();
+
+        scoreClient.reset();
+
+
+
     }
 
     public void stop() {
@@ -93,6 +106,17 @@ public class Game {
         for (IPostEntityProcessingService processor : postEntityProcessors) {
             processor.process(gameData, world);
         }
+
+        scoreRefreshCounter++;
+
+        if(scoreRefreshCounter >= 30) {
+            int currentScore = scoreClient.getScore();
+            if (currentScore != cachedScore) {
+                cachedScore = currentScore;
+                System.out.println("Current Score: " + cachedScore);
+            }
+            scoreRefreshCounter = 0;
+        }
     }
 
     private void render() {
@@ -106,6 +130,8 @@ public class Game {
         for (Entity entity : world.getEntities()) {
             drawEntity(entity);
         }
+
+        graphicsContext.fillText("Score: " + cachedScore, 10, 20);
     }
 
     private void drawEntity(Entity entity) {

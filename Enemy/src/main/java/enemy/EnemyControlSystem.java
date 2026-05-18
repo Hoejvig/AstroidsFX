@@ -1,13 +1,14 @@
 package enemy;
 
 import commonbullet.BulletSPI;
+import commonbullet.BulletServiceLocator;
 import data.Entity;
 import data.GameData;
 import data.World;
 import services.IEntityProcessingService;
 
 import java.util.Random;
-import java.util.ServiceLoader;
+
 
 public class EnemyControlSystem implements IEntityProcessingService {
 
@@ -43,7 +44,7 @@ public class EnemyControlSystem implements IEntityProcessingService {
             return;
         }
 
-        for (BulletSPI bulletSPI : ServiceLoader.load(BulletSPI.class)) {
+        for (BulletSPI bulletSPI : BulletServiceLocator.locateAll()) {
             world.addEntity(bulletSPI.createBullet(enemy, gameData));
             shootCooldown = 90;
             break;

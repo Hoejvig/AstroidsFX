@@ -33,6 +33,22 @@
   </dependencyManagement>
 
   <dependencies>
+      <dependency>
+        <groupId>io.micrometer</groupId>
+        <artifactId>micrometer-observation</artifactId>
+        <version>1.13.6</version>
+      </dependency>
+
+      <dependency>
+        <groupId>io.micrometer</groupId>
+        <artifactId>micrometer-commons</artifactId>
+        <version>1.13.6</version>
+      </dependency>
+     <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-web</artifactId>
+      <version>6.1.14</version>
+    </dependency> 
 
       <dependency>
         <groupId>dk.sdu.cbse</groupId>
@@ -49,6 +65,12 @@
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-params</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>5.11.0</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -94,6 +116,13 @@
         <plugin>
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>3.6.1</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>3.3.0</version>
+          <configuration>
+            <useModulePath>false</useModulePath>
+          </configuration>
         </plugin>
 
         <plugin>

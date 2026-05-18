@@ -103,7 +103,7 @@
               <arguments>
                 <argument>--module-path=mods-mvn;libs</argument>
 
-                <argument>--class-path=libs/*</argument>
+                <argument>--add-modules=CommonBullet,javafx.controls,javafx.graphics,spring.context,spring.beans,spring.core,spring.web,micrometer.observation,micrometer.commons</argument>
 
                 <argument>--module=Core/app.App</argument>
               </arguments>

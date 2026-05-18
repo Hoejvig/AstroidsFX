@@ -8,6 +8,7 @@ import services.IGamePluginService;
 import services.IPostEntityProcessingService;
 
 import org.springframework.context.support.GenericApplicationContext;
+import org.springframework.web.client.RestTemplate;
 
 import data.GameData;
 import data.World;
@@ -27,6 +28,9 @@ public class App extends Application {
 
         context.registerBean(GameData.class);
         context.registerBean(World.class);
+
+        context.registerBean(RestTemplate.class);
+        context.registerBean(ScoreClient.class);
 
         registerServices(context, IGamePluginService.class);
         registerServices(context, IEntityProcessingService.class);

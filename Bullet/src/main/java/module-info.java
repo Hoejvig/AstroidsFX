@@ -5,6 +5,9 @@ module Bullet {
     requires Common;
     requires CommonBullet;
 
-    provides BulletSPI with bullet.BulletControl;
-    provides IEntityProcessingService with bullet.BulletControl;
+    provides BulletSPI
+            with bullet.BulletControl;
+
+    provides IEntityProcessingService
+            with bullet.BulletControl;
 }
