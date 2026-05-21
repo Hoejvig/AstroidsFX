@@ -8,18 +8,15 @@ import org.springframework.web.client.RestTemplate;
 import services.IPostEntityProcessingService;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class Collision implements IPostEntityProcessingService {
 
     private final RestTemplate restTemplate = new RestTemplate();
 
-    @Override
+   @Override
     public void process(GameData gameData, World world) {
         List<Entity> entities = new ArrayList<>(world.getEntities());
-        Set<Entity> toRemove = new HashSet<>();
 
         for (int i = 0; i < entities.size(); i++) {
             Entity entity1 = entities.get(i);
@@ -33,8 +30,8 @@ public class Collision implements IPostEntityProcessingService {
                             + " and "
                             + entity2.getClass().getSimpleName());
 
-                     entity1.addDamage(1);
-                     entity2.addDamage(1);
+                    entity1.addDamage(1);
+                    entity2.addDamage(1);
 
                     if (shouldGiveScore(entity1, entity2)) {
                         addScore(10);
@@ -42,17 +39,14 @@ public class Collision implements IPostEntityProcessingService {
                 }
             }
         }
-
-        for (Entity entity : toRemove) {
-            world.removeEntity(entity);
-        }
     }
-
     private boolean shouldCollide(Entity entity1, Entity entity2) {
         return isPair(entity1, entity2, "Bullet", "Asteroid")
                 || isPair(entity1, entity2, "Bullet", "Enemy")
+                || isPair(entity1, entity2, "Bullet", "Player")
                 || isPair(entity1, entity2, "Player", "Asteroid")
-                || isPair(entity1, entity2, "Player", "Enemy");
+                || isPair(entity1, entity2, "Player", "Enemy")
+                || isPair(entity1, entity2, "Asteroid", "Enemy");
     }
 
     private boolean shouldGiveScore(Entity entity1, Entity entity2) {

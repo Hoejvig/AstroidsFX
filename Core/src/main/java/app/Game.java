@@ -23,6 +23,9 @@ public class Game {
     private final ScoreClient scoreClient;
     private int cachedScore = 0;
     private int scoreRefreshCounter = 0;
+    private boolean gameOver = false;
+
+
 
     private final GameData gameData;
     private final World world;
@@ -33,6 +36,15 @@ public class Game {
 
     private GraphicsContext graphicsContext;
     private AnimationTimer gameLoop;
+
+    private boolean isPlayerAlive() {
+        for (Entity entity : world.getEntities()) {
+            if (entity.getClass().getSimpleName().equals("Player")) {
+                return entity.getHealth() > 0;
+            }
+        }
+        return false;
+    }
 
     public Game(
             GameData gameData,
@@ -99,6 +111,11 @@ public class Game {
     }
 
     private void update() {
+
+        if (gameOver) {
+            return;
+        }
+
         for (IEntityProcessingService processor : entityProcessors) {
             processor.process(gameData, world);
         }
@@ -107,10 +124,18 @@ public class Game {
             processor.process(gameData, world);
         }
 
+        if (!isPlayerAlive()) {
+            gameOver = true;
+            cachedScore = scoreClient.getScore();
+            System.out.println("GAME OVER!");
+            return;
+        }
+
         scoreRefreshCounter++;
 
         if(scoreRefreshCounter >= 30) {
             int currentScore = scoreClient.getScore();
+
             if (currentScore != cachedScore) {
                 cachedScore = currentScore;
                 System.out.println("Current Score: " + cachedScore);
@@ -132,6 +157,10 @@ public class Game {
         }
 
         graphicsContext.fillText("Score: " + cachedScore, 10, 20);
+
+        if(gameOver) {
+            drawGameOverScreen();
+        }
     }
 
     private void drawEntity(Entity entity) {
@@ -158,6 +187,15 @@ public class Game {
         }
 
         graphicsContext.strokePolygon(xPoints, yPoints, xPoints.length);
+    }
+
+    private void drawGameOverScreen() {
+        double centerX = gameData.getDisplayWidth() / 2.0;
+        double centerY = gameData.getDisplayHeight() / 2.0;
+
+        graphicsContext.fillText("GAME OVER", centerX - 60, centerY);
+        graphicsContext.fillText("Final Score: " + cachedScore, centerX - 60, centerY + 25);
+        graphicsContext.fillText("Close the window to exit", centerX - 80, centerY + 50);
     }
 
     private void setupInput(Scene scene) {
